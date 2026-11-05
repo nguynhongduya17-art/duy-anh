@@ -1,1 +1,302 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bài Kiểm Tra Giáo Dục Kinh Tế Và Pháp Luật - Giữa Kỳ I Khối 12</title>
+    <style>
+        :root {
+            --primary-color: #1a5f7a;
+            --secondary-color: #002b5b;
+            --accent-color: #57c5b6;
+            --bg-color: #f8f9fa;
+            --card-bg: #ffffff;
+            --text-color: #2b2d42;
+            --success-color: #28a745;
+            --error-color: #dc3545;
+            --border-color: #e9ecef;
+        }
 
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            line-height: 1.6;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        header {
+            text-align: center;
+            background: linear-gradient(135deg, var(--secondary-color), var(--primary-color));
+            color: white;
+            padding: 30px 20px;
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            margin-bottom: 25px;
+        }
+
+        header h1 {
+            font-size: 1.8rem;
+            margin-bottom: 8px;
+        }
+
+        header p {
+            font-size: 1rem;
+            opacity: 0.9;
+        }
+
+        .quiz-card {
+            background: var(--card-bg);
+            border-radius: 10px;
+            padding: 25px;
+            margin-bottom: 20px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+            border: 1px solid var(--border-color);
+        }
+
+        .section-header {
+            background-color: var(--primary-color);
+            color: white;
+            padding: 12px 20px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            font-weight: 600;
+        }
+
+        .info-box {
+            background-color: #eef7f6;
+            border-left: 4px solid var(--accent-color);
+            padding: 15px;
+            margin-bottom: 20px;
+            border-radius: 0 8px 8px 0;
+            font-style: italic;
+        }
+
+        .question-title {
+            font-weight: 600;
+            font-size: 1.05rem;
+            margin-bottom: 15px;
+            color: var(--secondary-color);
+        }
+
+        .options-list {
+            list-style: none;
+        }
+
+        .option-item {
+            margin-bottom: 10px;
+        }
+
+        .option-label {
+            display: flex;
+            align-items: flex-start;
+            padding: 12px 15px;
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .option-label:hover {
+            background-color: #f1f5f9;
+border-color: var(--primary-color);
+        }
+
+        .option-label input {
+            margin-right: 12px;
+            margin-top: 4px;
+        }
+
+        /* True/False Table Styling */
+        .tf-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 10px;
+        }
+
+        .tf-table th, .tf-table td {
+            padding: 12px;
+            border: 1px solid var(--border-color);
+            text-align: left;
+        }
+
+        .tf-table th {
+            background-color: #f1f5f9;
+            color: var(--secondary-color);
+        }
+
+        .tf-table td.center {
+            text-align: center;
+            width: 80px;
+        }
+
+        .explanation {
+            margin-top: 15px;
+            padding: 12px 15px;
+            border-radius: 6px;
+            display: none;
+            font-size: 0.95rem;
+        }
+
+        .explanation.visible {
+            display: block;
+        }
+
+        .explanation.correct {
+            background-color: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+        }
+
+        .explanation.incorrect {
+            background-color: #f8d7da;
+            color: #721c24;
+            border: 1px solid #f5c6cb;
+        }
+
+        .action-container {
+            text-align: center;
+            margin: 30px 0;
+        }
+
+        .btn {
+            background-color: var(--primary-color);
+            color: white;
+            border: none;
+            padding: 14px 28px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: background-color 0.2s ease;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+
+        .btn:hover {
+            background-color: var(--secondary-color);
+        }
+
+        #result-card {
+            display: none;
+            text-align: center;
+            background: var(--card-bg);
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            margin-bottom: 25px;
+        }
+
+        .score-display {
+            font-size: 2.5rem;
+            font-weight: bold;
+            color: var(--primary-color);
+            margin: 15px 0;
+        }
+
+        @media (max-width: 600px) {
+            body {
+                padding: 10px;
+            }
+            .quiz-card {
+                padding: 15px;
+            }
+            .tf-table th, .tf-table td {
+                padding: 8px 5px;
+                font-size: 0.9rem;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <header>
+        <h1>ÔN TẬP GIÁO DỤC KINH TẾ VÀ PHÁP LUẬT 12</h1>
+        <p>BÀI KIỂM TRA GIỮA KỲ I (BÀI 1 - 4)</p>
+    </header>
+
+    <div id="result-card">
+        <h2>KẾT QUẢ BÀI KIỂM TRA</h2>
+        <div class="score-display" id="score">0 / 0</div>
+        <p id="result-text"></p>
+<button class="btn" onclick="resetQuiz()" style="margin-top: 15px;">Làm Lại Bài Thi</button>
+    </div>
+
+    <form id="quiz-form">
+        <div class="section-header">PHẦN I. TRẮC NGHIỆM NHIỀU LỰA CHỌN</div>
+        <div id="part1-questions"></div>
+
+        <div class="section-header" style="margin-top: 40px;">PHẦN II. TRẮC NGHIỆM ĐÚNG - SAI</div>
+        <div id="part2-questions"></div>
+
+        <div class="action-container">
+            <button type="button" class="btn" onclick="submitQuiz()">Nộp Bài & Xem Đáp Án</button>
+        </div>
+    </form>
+</div>
+
+<script>
+const part1Data = [
+    {
+        id: 1,
+        question: "Đối với mỗi quốc gia, vai trò của tăng trưởng và phát triển kinh tế thể hiện ở việc, thông qua tăng trưởng và phát triển kinh tế sẽ góp phần",
+        options: ["A. nâng cao tỷ lệ thất nghiệp.", "B. hạn chế nguồn thu ngân sách.", "C. kiềm chế mở rộng việc làm.", "D. nâng cao phúc lợi xã hội."],
+        answer: 3
+    },
+    {
+        id: 2,
+        question: "Nội dung nào dưới đây không phản ánh bản chất của phát triển kinh tế?",
+        options: ["A. Tình trạng mất ổn định chính trị diễn ra thường xuyên trong khu vực.", "B. Mức sống trung bình của người dân tăng trong một thời kì nhất định.", "C. Cải thiện năng suất lao động thông qua áp dụng công nghệ tiên tiến.", "D. Tăng tỉ trọng ngành công nghiệp trong tổng sản phẩm quốc nội."],
+        answer: 0
+    },
+    {
+        id: 3,
+        question: "Trong mối quan hệ giữa tăng trưởng kinh tế với phát triển kinh tế nếu tăng trưởng kinh tế mà không chú trọng đến phát triển bền vững sẽ gây ra hậu quả nào dưới đây?",
+        options: ["A. Mở rộng hội nhập quốc tế.", "B. Bất bình đẳng xã hội giảm.", "C. Môi trường bị suy thoái.", "D. Vấn đề thất nghiệp giảm."],
+        answer: 2
+    },
+    {
+        id: 4,
+        question: "Cụm từ GDP là một trong những chỉ tiêu thể hiện tốc độ tăng trưởng kinh tế nó thể hiện nội dung nào dưới đây?",
+        options: ["A. Tổng sản phẩm quốc dân.", "B. Tổng sản phẩm quốc nội theo đầu người.", "C. Tổng sản phẩm quốc nội.", "D. Tổng sản phẩm quốc dân theo đầu người."],
+        answer: 2
+    },
+    {
+        id: 5,
+        question: "Trong mối quan hệ giữa tăng trưởng kinh tế với phát triển kinh tế nếu tăng trưởng kinh tế mà không chú trọng đến phát triển bền vững sẽ gây ra hậu quả nào dưới đây?",
+options: ["A. Đời sống con người nâng cao.", "B. Tài nguyên thiên nhiên cạn kiệt.", "C. Tệ nạn xã hội ngày càng giảm.", "D. Vấn đề đói nghèo bị đẩy lùi."],
+        answer: 1
+    },
+    {
+        id: 6,
+        question: "Phát biểu nào dưới đây là sai về mối quan hệ giữa tăng trưởng kinh tế với phát triển kinh tế?",
+        options: ["A. Một quốc gia muốn phát triển kinh tế chỉ cần đẩy mạnh tốc độ tăng trưởng kinh tế.", "B. Phát triển bền vững là sự bảo đảm để thúc đẩy tăng trưởng kinh tế.", "C. Tăng trưởng kinh tế là điều kiện để thúc đẩy phát triển bền vững.", "D. Các quốc gia đều đặt mục tiêu phát triển bền vững nhưng muốn phát triển được phải dựa vào tăng trưởng kinh tế."],
+        answer: 0
+    },
+    {
+        id: 7,
+        question: "Trong điều kiện toàn cầu hóa, hội nhập kinh tế quốc tế giúp mỗi quốc gia có cơ hội",
+        options: ["A. mở rộng lãnh thổ.", "B. mở mang biên giới.", "C. mở rộng chủ quyền.", "D. mở rộng thị trường."],
+        answer: 3
+    },
+    {
+        id: 8,
+        question: "Phát biểu nào dưới đây là sai về sự cần thiết của hội nhập kinh tế quốc tế?",
+        options: ["A. Các nước đang phát triển cần tham gia hội nhập kinh tế quốc tế để tiếp cận và sử dụng được các nguồn lực bên ngoài.", "B. Hội nhập kinh tế quốc tế chỉ cần thiết với những quốc gia đang thiếu các nguồn lực về vốn.", "C. Đối với nước ta, hội nhập kinh tế là con đường ngắn nhất để rút ngắn khoảng cách lạc hậu.", "D. Hội nhập kinh tế quốc tế có khả năng thúc đẩy tăng trưởng và phát triển kinh tế quốc gia."],
+        answer: 1
+    },
+    {
+        id: 9,
+        question: "Phát biểu nào dưới đây là sai về khái niệm bảo hiểm?",
+        options: ["A. Tham gia bảo hiểm giúp các cá nhân, nhanh chóng ổn định đời sống vật chất, tinh thần.", "B. Bảo hiểm ch
